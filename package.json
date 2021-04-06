@@ -1,0 +1,36 @@
+{
+  "_ethers.alias": {
+    "ledger-transport.js": "browser-ledger-transport.js"
+  },
+  "browser": {
+    "./lib/ledger-transport.js": "./lib/browser-ledger-transport.js"
+  },
+  "main": "./lib/index.js",
+  "module": "./lib.esm/index.js",
+  "name": "ethers-ledger",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mudgen/ethers-ledger.git"
+  },
+  "author": "Richard Moore <me@ricmoo.com> and Nick Mudge",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mudgen/ethers-ledger/issues"
+  },
+  "homepage": "https://github.com/mudgen/ethers-ledger#readme",
+  "dependencies": {
+    "@ledgerhq/hw-app-eth": "^5.48.0",
+    "@ledgerhq/hw-transport": "^5.48.0",
+    "@ledgerhq/hw-transport-u2f": "^5.36.0-deprecated",
+    "ethers": "^5.1.0"
+  },
+  "optionalDependencies": {
+    "@ledgerhq/hw-transport-node-hid": "5.26.0"
+  },
+  "types": "./lib/index.d.ts"
+}
