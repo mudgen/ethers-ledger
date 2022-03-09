@@ -24,10 +24,10 @@
   },
   "homepage": "https://github.com/mudgen/ethers-ledger#readme",
   "dependencies": {
-    "@ledgerhq/hw-app-eth": "^5.48.0",
-    "@ledgerhq/hw-transport": "^5.48.0",
+    "@ledgerhq/hw-app-eth": "6.7.0",
+    "@ledgerhq/hw-transport": "6.7.0",
     "@ledgerhq/hw-transport-u2f": "^5.36.0-deprecated",
-    "ethers": "^5.1.0"
+    "ethers": "^5.4.0"
   },
   "optionalDependencies": {
     "@ledgerhq/hw-transport-node-hid": "5.26.0"

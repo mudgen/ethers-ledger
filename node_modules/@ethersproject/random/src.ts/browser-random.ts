@@ -6,18 +6,18 @@ import { Logger } from "@ethersproject/logger";
 import { version } from "./_version";
 const logger = new Logger(version);
 
-let anyGlobal: any = null;
-try {
-    anyGlobal = (window as any);
-    if (anyGlobal == null) { throw new Error("try next"); }
-} catch (error) {
-    try {
-        anyGlobal = (global as any);
-        if (anyGlobal == null) { throw new Error("try next"); }
-    } catch (error) {
-        anyGlobal = { };
-    }
-}
+// Debugging line for testing browser lib in node
+//const window = { crypto: { getRandomValues: () => { } } };
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
+function getGlobal(): any {
+  if (typeof self !== 'undefined') { return self; }
+  if (typeof window !== 'undefined') { return window; }
+  if (typeof global !== 'undefined') { return global; }
+  throw new Error('unable to locate global object');
+};
+
+const anyGlobal = getGlobal();
 
 let crypto: any = anyGlobal.crypto || anyGlobal.msCrypto;
 if (!crypto || !crypto.getRandomValues) {
@@ -34,7 +34,7 @@ if (!crypto || !crypto.getRandomValues) {
 }
 
 export function randomBytes(length: number): Uint8Array {
-    if (length <= 0 || length > 1024 || (length % 1)) {
+    if (length <= 0 || length > 1024 || (length % 1) || length != length) {
         logger.throwArgumentError("invalid length", "length", length);
     }
 

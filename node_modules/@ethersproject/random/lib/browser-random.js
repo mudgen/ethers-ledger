@@ -5,24 +5,23 @@ var bytes_1 = require("@ethersproject/bytes");
 var logger_1 = require("@ethersproject/logger");
 var _version_1 = require("./_version");
 var logger = new logger_1.Logger(_version_1.version);
-var anyGlobal = null;
-try {
-    anyGlobal = window;
-    if (anyGlobal == null) {
-        throw new Error("try next");
+// Debugging line for testing browser lib in node
+//const window = { crypto: { getRandomValues: () => { } } };
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
+function getGlobal() {
+    if (typeof self !== 'undefined') {
+        return self;
     }
+    if (typeof window !== 'undefined') {
+        return window;
+    }
+    if (typeof global !== 'undefined') {
+        return global;
+    }
+    throw new Error('unable to locate global object');
 }
-catch (error) {
-    try {
-        anyGlobal = global;
-        if (anyGlobal == null) {
-            throw new Error("try next");
-        }
-    }
-    catch (error) {
-        anyGlobal = {};
-    }
-}
+;
+var anyGlobal = getGlobal();
 var crypto = anyGlobal.crypto || anyGlobal.msCrypto;
 if (!crypto || !crypto.getRandomValues) {
     logger.warn("WARNING: Missing strong random number source");
@@ -35,12 +34,12 @@ if (!crypto || !crypto.getRandomValues) {
     };
 }
 function randomBytes(length) {
-    if (length <= 0 || length > 1024 || (length % 1)) {
+    if (length <= 0 || length > 1024 || (length % 1) || length != length) {
         logger.throwArgumentError("invalid length", "length", length);
     }
     var result = new Uint8Array(length);
     crypto.getRandomValues(result);
-    return bytes_1.arrayify(result);
+    return (0, bytes_1.arrayify)(result);
 }
 exports.randomBytes = randomBytes;
 ;
